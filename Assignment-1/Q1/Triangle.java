@@ -1,7 +1,8 @@
 /*
  *  Triangle.java
  * 
- *  This program will get input of 3 sides of a triangle, validate the input, and output the area and perimeter of the triangle.
+ *  This program will get input of 3 sides of a triangle, validate the input, 
+ *  and output the area and perimeter of the triangle.
  *  
  */
 
@@ -10,7 +11,7 @@ import java.util.Scanner;
 public class Triangle
 {
     
-    public static void main(String []args)
+    public static void main(String[] args)
     {
         // Initialize scanner object
         Scanner scan = new Scanner(System.in);
