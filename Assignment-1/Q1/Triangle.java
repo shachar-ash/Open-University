@@ -1,7 +1,7 @@
 /*
  *  Triangle.java
  * 
- *  This class will get input of 3 sides of a triangle, validate the input, and output the area and perimeter of the triangle.
+ *  This program will get input of 3 sides of a triangle, validate the input, and output the area and perimeter of the triangle.
  *  
  */
 
