@@ -9,6 +9,8 @@
  *  length = Square root of ( (x1-x2)^2 + (y1-y2)^2 )
  * and then used to check if sides are equal. 
  * 
+ * @author: David Rashba
+ * @version: 30/10/19
  */
 
 import java.util.Scanner;
