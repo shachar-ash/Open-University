@@ -4,6 +4,8 @@
  *  This program will get input of 3 sides of a triangle, validate the input, 
  *  and output the area and perimeter of the triangle.
  *  
+ * @author: David Rashba
+ * @version: 30/10/19
  */
 
 import java.util.Scanner;
