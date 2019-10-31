@@ -4,7 +4,7 @@
  * This class will define a Date object.
  * 
  * @author: David Rashba
- * @date: 30/10/19
+ * @version: 30/10/19
  */
 
 public class Date
