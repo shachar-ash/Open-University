@@ -73,7 +73,7 @@ public class FoodItem
      */
     public FoodItem(FoodItem other){
         this._name = other.getName();
-        this._catalogueNumber = other.getCatalougeNumber();
+        this._catalogueNumber = other.getCatalogueNumber();
         this._quantity = other.getQuantity();
         this._productionDate = new Date(other.getProductionDate());
         this._expiryDate = new Date(other.getExpiryDate());
@@ -97,7 +97,7 @@ public class FoodItem
      * 
      * @return the catalouge number
      */
-    public long getCatalougeNumber(){
+    public long getCatalogueNumber(){
         return this._catalogueNumber;
     }
     
@@ -170,7 +170,7 @@ public class FoodItem
      * @param d production date value to be set 
      */
     public void setProductionDate(Date d){
-        this._productionDate = d.before(this._expiryDate) 
+        this._productionDate = d.after(this._expiryDate) 
                                ? this._productionDate : new Date(d);
     }
     
@@ -180,7 +180,7 @@ public class FoodItem
      * @param d expiry date value to be set
      */
     public void setExpiryDate(Date d){
-        this._expiryDate = d.after(_productionDate) ? _expiryDate : new Date(d);
+        this._expiryDate = d.before(_productionDate) ? _expiryDate : new Date(d);
     }
     
     /**
@@ -199,8 +199,8 @@ public class FoodItem
      * @return true if the food items are the same
      */
     public boolean equals(FoodItem other){
-        boolean isSameName = this._name == other.getName();
-        boolean isSameCatalougeNumber = this._catalogueNumber == other.getCatalougeNumber();
+        boolean isSameName = this._name.equals(other.getName());
+        boolean isSameCatalougeNumber = this._catalogueNumber == other.getCatalogueNumber();
         boolean isSameProductionDate = this._productionDate.equals(other.getProductionDate());
         boolean isSameExpiryDate = this._expiryDate.equals(other.getExpiryDate());
         boolean isSameMinTemp = this._minTemperature == other.getMinTemperature();

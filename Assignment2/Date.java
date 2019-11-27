@@ -140,16 +140,11 @@ public class Date
      * @return true if the dates are the same
      */
     public boolean equals(Date other){
-        boolean isDayEqual = getDay() == other.getDay();
-        boolean isMonthEqual = getMonth() == other.getMonth();
-        boolean isYearEqual = getYear() == other.getYear();
+        boolean isDayEqual = this._day == other.getDay();
+        boolean isMonthEqual = this._month == other.getMonth();
+        boolean isYearEqual = this._year == other.getYear();
         
-        if(isDayEqual == true && isMonthEqual == true && isYearEqual == true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isDayEqual && isMonthEqual && isYearEqual;
     }
     
     /**
