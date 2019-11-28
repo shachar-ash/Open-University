@@ -24,6 +24,11 @@ public class Date
 
     public final int MIN_YEAR = 1000;
     public final int MAX_YEAR = 9999;
+    
+    public final int DEFAULT_DAY = 1;
+    public final int DEFAULT_MONTH = 1;
+    public final int DEFAULT_YEAR = 2000;
+    
 
     // Constructors
     /**
@@ -44,9 +49,9 @@ public class Date
             this._month = month;
             this._year = year;
         }else{
-            this._day = 1;
-            this._month = 1;
-            this._year = 2000;
+            this._day = DEFAULT_DAY;
+            this._month = DEFAULT_MONTH;
+            this._year = DEFAULT_YEAR;
         }
 
     }
@@ -213,11 +218,11 @@ public class Date
             
         }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR){ // not valid day, not valid month but valid year
             // next day is 1st of next month, next month is first of next year -> return 1.1 of next year
-            return new Date(1,1, getYear() + 1);
+            return new Date(MIN_DAYS_OF_MONTH,MAX_MONTHS_OF_YEAR, getYear() + 1);
             
         }else{ // not valid day but valid month and year
             // next day is 1st of next month -> return 1st of next month
-            return new Date(1, getMonth() + 1, getYear());
+            return new Date(MIN_DAYS_OF_MONTH, getMonth() + 1, getYear());
         }
     }
 
