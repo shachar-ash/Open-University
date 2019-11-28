@@ -252,7 +252,7 @@ public class Date
      * @return true if given year is a leap year
      */
     private boolean isLeapYear(int year){
-        return (year % 4 == 0) && (year % 100 == 0) && (year % 400 == 0);
+        return (year % 4 == 0) || ((year % 100 == 0) && (year % 400 == 0));
     }
     
     /**
