@@ -15,16 +15,16 @@ public class Date
     private int _month;
     // year represented by 4 digit integer
     private int _year;
-   
+
     public final int MIN_DAYS_OF_MONTH = 1;
-    
+
     public final int FEBRUARY = 2;
     public final int MAX_MONTHS_OF_YEAR = 12;
     public final int MIN_MONTHS_OF_YEAR = 1;
-    
+
     public final int MIN_YEAR = 1000;
     public final int MAX_YEAR = 9999;
-    
+
     // Constructors
     /**
      * creates a new Date object if the date is valid, otherwise creates the date 1/1/2000
@@ -36,9 +36,9 @@ public class Date
     public Date(int day, int month, int year){
         // True if day between 1 - maxDaysOfMonth, and month between 1 - 12
         boolean isValidDate = (day >= MIN_DAYS_OF_MONTH) && (day <= maxDaysOfMonth(month, year)) 
-                           && (month >= MIN_MONTHS_OF_YEAR) && (month <= MAX_MONTHS_OF_YEAR)
-                           && (year >= MIN_YEAR) && (year <= MAX_YEAR);
-        
+            && (month >= MIN_MONTHS_OF_YEAR) && (month <= MAX_MONTHS_OF_YEAR)
+            && (year >= MIN_YEAR) && (year <= MAX_YEAR);
+
         if(isValidDate){
             this._day = day;
             this._month = month;
@@ -48,9 +48,9 @@ public class Date
             this._month = 1;
             this._year = 2000;
         }
-        
+
     }
-    
+
     /**
      * copy constructor
      * 
@@ -61,9 +61,9 @@ public class Date
         this._month = other.getMonth();
         this._year = other.getYear();
     }
-    
+
     // Getters
-    
+
     /**
      * gets the day
      * 
@@ -72,7 +72,7 @@ public class Date
     public int getDay(){
         return this._day;
     }
-    
+
     /**
      * gets the month
      * 
@@ -81,7 +81,7 @@ public class Date
     public int getMonth(){
         return this._month;
     }
-    
+
     /**
      * gets the year
      * 
@@ -90,9 +90,9 @@ public class Date
     public int getYear(){
         return this._year;
     }
-    
+
     //Setters
-    
+
     /**
      * sets the day (only if date remains valid)
      * 
@@ -104,7 +104,7 @@ public class Date
             this._day = dayToSet;
         }
     }
-    
+
     /**
      * set the month (only if date remains valid)
      * 
@@ -117,8 +117,7 @@ public class Date
             this._month = monthToSet;
         }
     }
-    
-    
+
     /**
      * sets the year (only if date remains valid)
      * 
@@ -127,12 +126,12 @@ public class Date
     public void setYear(int yearToSet){
         // avoid setting 29th of february on a non leap year 
         if(this._month == FEBRUARY && isLeapYear(yearToSet) == false && this._day > 28){
-          // dont set new year, because it is 29/02 in a non leap year
+            // dont set new year, because it is 29/02 in a non leap year
         }else if(yearToSet >= MIN_YEAR && yearToSet <= MAX_YEAR){
             this._year = yearToSet;
         }
     }
-    
+
     /**
      * check if 2 dates are the same
      * 
@@ -143,10 +142,10 @@ public class Date
         boolean isDayEqual = this._day == other.getDay();
         boolean isMonthEqual = this._month == other.getMonth();
         boolean isYearEqual = this._year == other.getYear();
-        
+
         return isDayEqual && isMonthEqual && isYearEqual;
     }
-    
+
     /**
      * check if this date is before other date
      * 
@@ -157,10 +156,10 @@ public class Date
         // calculate how many days since begining of counting christian years passed for each object
         int thisDateDays = calculateDate(getDay(), getMonth(), getYear());
         int otherDateDays = calculateDate(other.getDay(), other.getMonth(), other.getYear());
-        
+
         return thisDateDays < otherDateDays;
     }
-    
+
     /**
      * check if this date is after other date
      * 
@@ -171,7 +170,7 @@ public class Date
         // True if other date object is before this object
         return other.before(this);
     }
-    
+
     /**
      * calculates the difference in days between two dates
      * 
@@ -186,7 +185,7 @@ public class Date
         int difference = thisDateDays - otherDateDays;
         return Math.abs(difference);
     }
-    
+
     /**
      * returns a String that represents this date
      * 
@@ -197,26 +196,31 @@ public class Date
         // for single digits value pad with 0 (01/02/2020)
         return String.format("%02d/%02d/%04d", this.getDay(), this.getMonth(), this.getYear());
     }
-    
+
     /**
      * calculate the date of tomorrow
      * 
      * @return the date of tomorrow
      */
     public Date tomorrow(){
-        // check if tommorows date is a valid day
+        // next day is a valid day
         if(isValidDayOfMonth(getDay() + 1, getMonth(), getYear())){
-            // tommorow is valid, can return a new date
-            return new Date(getDay() + 1, getMonth(), getYear());
-        }else if(getMonth() + 1 <= MAX_MONTHS_OF_YEAR){
-            // tommorow is 1st of next month
+            return new Date(getDay() + 1, getMonth(), getYear());      
+            
+        }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR && getYear() + 1 > MAX_YEAR){ // not valid day, not valid month, not valid year
+            // next day is 1st of next month, next month is first of next year, next year is 10,000 -> return 31/12/9999
+            return new Date(31,12,9999);
+            
+        }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR){ // not valid day, not valid month but valid year
+            // next day is 1st of next month, next month is first of next year -> return 1.1 of next year
+            return new Date(1,1, getYear() + 1);
+            
+        }else{ // not valid day but valid month and year
+            // next day is 1st of next month -> return 1st of next month
             return new Date(1, getMonth() + 1, getYear());
-        }else{
-            // tommorow is 01/01 of next year
-            return new Date(1, 1, getYear() + 1);
         }
     }
-    
+
     /**
      * calculate the day of the week that this date occurs on 0-Saturday 1-Sunday 2-Monday etc.
      * 
@@ -232,7 +236,7 @@ public class Date
         int month = getMonth();
         int year = getYear() % 100;
         int century = Math.floorDiv(getYear(), 100);
-        
+
         if(getMonth() < 3){
             // month is jan/feb
             month = getMonth() + 12;
@@ -240,11 +244,9 @@ public class Date
         int day = (getDay() + (26 * (month + 1)) / 10 + year + year / 4 + century / 4 - 2 * century) % 7;
         return day;
     }
-    
-    
+
     //////// Private methods
-    
-    
+
     /**
      * checks if given year is a leap year
      * 
@@ -254,7 +256,7 @@ public class Date
     private boolean isLeapYear(int year){
         return (year % 4 == 0) || ((year % 100 == 0) && (year % 400 == 0));
     }
-    
+
     /**
      * calculate how many days are in a given month, handles special case of February
      * 
@@ -272,7 +274,7 @@ public class Date
         }
         return maxDays;
     }
-    
+
     /**
      * checks if a given day is valid on a given date
      * 
@@ -289,7 +291,7 @@ public class Date
             return true;
         }
     }
-    
+
     /**
      * computes the day number since the beginning of the Christian counting of years 
      * 
@@ -300,10 +302,10 @@ public class Date
      */
     private int calculateDate (int day, int month, int year) { 
         if (month < 3) { 
-           year--; 
-           month = month + 12; 
+            year--; 
+            month = month + 12; 
         } 
         return 365 * year + year/4 - year/100 + year/400 + ((month+1) * 306)/10 + (day - 62); 
     }  
-    
+
 }
