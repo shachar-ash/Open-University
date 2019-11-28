@@ -1,4 +1,3 @@
-
 /**
  * This class will define an FoodItem object
  *
@@ -52,7 +51,7 @@ public class FoodItem
         this._productionDate = new Date(productionDate);
         // Expiry date
         this._expiryDate = expiryDate.before(productionDate) 
-                           ? productionDate.tomorrow() : expiryDate;
+                           ? new Date(productionDate.tomorrow()) : new Date(expiryDate);
         // Temperature
         if(minTemperature > maxTemperature){
          this._minTemperature = maxTemperature;
@@ -116,7 +115,7 @@ public class FoodItem
      * @return the production date
      */
     public Date getProductionDate(){
-        return this._productionDate;
+        return new Date(this._productionDate);
     }
     
     /**
@@ -125,7 +124,7 @@ public class FoodItem
      * @return the expiry date
      */
     public Date getExpiryDate(){
-        return this._expiryDate;
+        return new Date(this._expiryDate);
     }
     
     /**
@@ -259,7 +258,7 @@ public class FoodItem
      * check if this food item is cheaper than other food item
      * 
      * @param other food item to compare this food item to
-     * @return true if this food item is cheaper than other date
+     * @return true if this food item is cheaper than other
      */
     public boolean isCheaper(FoodItem other){
         return this._price < other.getPrice();
