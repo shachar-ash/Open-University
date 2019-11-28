@@ -91,11 +91,11 @@ public class Congruent
         // each of the following conditions checks if 2 side are equal: 
         
         // [a1 and (a2 or b2)] and [b1 and (a2 or b2)]
-        boolean isABEqual = a1 == a2 || a1 == b2 && b1 == a2 || b1 == b2;
+        boolean isABEqual = (a1 == a2 || a1 == b2) && (b1 == a2 || b1 == b2);
         // [a1 and (a2 or c2)] and [c1 and (a2 or c2)]
-        boolean isACEqual = a1 == a2 || a1 == c2 && c1 == a2 || c1 == c2;
+        boolean isACEqual = (a1 == a2 || a1 == c2) && (c1 == a2 || c1 == c2);
         // [b1 and (b2 or c2)] and [c1 and(b2 or c2)]
-        boolean isBCEqual = b1 == b2 || b1 == c2 && c1 == b2 || c1 == c2;
+        boolean isBCEqual = (b1 == b2 || b1 == c2) && (c1 == b2 || c1 == c2);
         // if either of them true, there are 2 equal sides of the triangle, and the third must be equal too
         if(isABEqual || isACEqual || isBCEqual)
         {
