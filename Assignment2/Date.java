@@ -213,12 +213,15 @@ public class Date
             return new Date(getDay() + 1, getMonth(), getYear());      
             
         }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR && getYear() + 1 > MAX_YEAR){ // not valid day, not valid month, not valid year
+            // next day is 1st of next month, next month is first of next year, next year is 10,000 -> constructor returns 1/1/2000
+            return new Date(MIN_DAYS_OF_MONTH, MIN_MONTHS_OF_YEAR, getYear() + 1);
+            
             // next day is 1st of next month, next month is first of next year, next year is 10,000 -> return 31/12/9999
-            return new Date(31,12,9999);
+            //return new Date(31,12.9999);
             
         }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR){ // not valid day, not valid month but valid year
             // next day is 1st of next month, next month is first of next year -> return 1.1 of next year
-            return new Date(MIN_DAYS_OF_MONTH,MAX_MONTHS_OF_YEAR, getYear() + 1);
+            return new Date(MIN_DAYS_OF_MONTH, MIN_MONTHS_OF_YEAR, getYear() + 1);
             
         }else{ // not valid day but valid month and year
             // next day is 1st of next month -> return 1st of next month
