@@ -1,4 +1,5 @@
-/**
+{
+ /**
  * CongruentTriangles.java
  * 
  * This program will get as input from the user the vertices of 2 triangles,
@@ -88,21 +89,20 @@ public class Congruent
         System.out.println("Its lengths are " + a2 + ", " + b2 + ", " + c2 + ".");
         
         // Check if the triangles are congurent by comparing lengths
-        // each of the following conditions checks if 2 side are equal: 
+        // 2 triangles are coungruent if the sums of their sides are equal and 2 sides are equal
         
-        // [a1 and (a2 or b2)] and [b1 and (a2 or b2)]
-        boolean isABEqual = (a1 == a2 || a1 == b2) && (b1 == a2 || b1 == b2);
-        // [a1 and (a2 or c2)] and [c1 and (a2 or c2)]
-        boolean isACEqual = (a1 == a2 || a1 == c2) && (c1 == a2 || c1 == c2);
-        // [b1 and (b2 or c2)] and [c1 and(b2 or c2)]
-        boolean isBCEqual = (b1 == b2 || b1 == c2) && (c1 == b2 || c1 == c2);
-        // if either of them true, there are 2 equal sides of the triangle, and the third must be equal too
-        if(isABEqual || isACEqual || isBCEqual)
-        {
-         System.out.println("\nThe triangles are congruent.");   
-        }
-        else
-        {
+        // true if sum of sides of 2 triangles are equal
+        boolean isSumEqual = (a1 + b1 + c1) == (a2 + b2 + c2);
+        // true if [a1 = a2] and [b1 = b2 or c2]
+        boolean isA1A2 = (a1 == a2) && ( b1 == b2 || b1 == c2);
+        // true if [a1 = b2] and [b1 = a2 or c2]
+        boolean isA1B2 = (a1 == b2) && (b1 == a2 || b1 == c2);
+        // true if [a1 = c2] and [b1 = b2 or a2]
+        boolean isA1C2 = (a1 == c2) && ( b1 == b2 || b1 == a2 );
+        
+        if(isSumEqual && (isA1A2 || isA1B2 || isA1C2)){
+            System.out.println("\nThe triangles are congruent.");   
+        }else{
             System.out.println("\nThe triangles are not congruent.");
         }
     }
