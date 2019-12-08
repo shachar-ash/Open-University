@@ -18,7 +18,7 @@ public class Stock
     /**
      * Default constructor
      * 
-     * Creates an Stock object with new array of FoodItems with size of 100.
+     * Creates a Stock object with new array of FoodItems with size of 100.
      */
     public Stock(){
         _stock = new FoodItem[MAX_ITEMS_IN_ARRAY];
