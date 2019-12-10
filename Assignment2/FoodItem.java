@@ -1,3 +1,4 @@
+ 
 /**
  * This class will define an FoodItem object
  *
@@ -40,7 +41,7 @@ public class FoodItem
                     int minTemperature, int maxTemperature,
                     int price){
         // Name
-        this._name = name.isEmpty() ?  DEFAULT_ITEM_NAME : name;
+        this._name = name.isBlank() ?  DEFAULT_ITEM_NAME : name;
         // Catalouge number
         this._catalogueNumber = catalogueNumber < MIN_CATALOUGE_NUM_LENGTH 
                                 || catalogueNumber > MAX_CATALOUGE_NUM_LENGTH
@@ -62,7 +63,7 @@ public class FoodItem
         }
         
         // Price
-        this._price = price < 0 ? DEFAULT_PRICE : price;
+        this._price = price < 1 ? DEFAULT_PRICE : price;
     }
     
     /**
@@ -217,8 +218,9 @@ public class FoodItem
      * @return true if this food item is fresh on the date d
      */
     public boolean isFresh(Date d){
-        return d.before(this._expiryDate) && d.after(this._productionDate);
-    }
+        return (this.getExpiryDate().after(d)  || this.getExpiryDate().equals(d)) && (this.getProductionDate().equals(d) || this.getProductionDate().before(d));
+        // return d.before(this._expiryDate) && d.after(this._productionDate);
+     }
     
     /**
      * returns a String that represents this food item
@@ -227,7 +229,7 @@ public class FoodItem
      * <br>FoodItem: milk CatalogueNumber: 1234 ProductionDate: 14/12/2019 ExpiryDate: 21/12/2019 Quantity: 3
      */
     public String toString(){
-        return "FoodItem: " + this._name + "\tCatalougeNumber: " + this._catalogueNumber 
+        return "FoodItem: " + this._name + "\tCatalogueNumber: " + this._catalogueNumber 
                 + "\tProductionDate: " + this._productionDate.toString() + "\tExpiryDate: "
                 + this._expiryDate.toString() + "\tQuantity: " + this._quantity;
     }
@@ -250,6 +252,7 @@ public class FoodItem
      */
     public int howManyItems(int amount){
         int maxItems = amount / this._price;
+        maxItems = maxItems < 0 ? 0 : maxItems;
         return maxItems < this._quantity ? maxItems : this._quantity;
         
     }

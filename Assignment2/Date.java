@@ -24,11 +24,10 @@ public class Date
 
     public final int MIN_YEAR = 1000;
     public final int MAX_YEAR = 9999;
-    
+
     public final int DEFAULT_DAY = 1;
     public final int DEFAULT_MONTH = 1;
     public final int DEFAULT_YEAR = 2000;
-    
 
     // Constructors
     /**
@@ -39,8 +38,11 @@ public class Date
      * @param year the year (4 digits)
      */
     public Date(int day, int month, int year){
+        boolean isValidDate = false;
         // True if day between 1 - maxDaysOfMonth, and month between 1 - 12
-        boolean isValidDate = (day >= MIN_DAYS_OF_MONTH) && (day <= maxDaysOfMonth(month, year)) 
+        if((month >= MIN_MONTHS_OF_YEAR) && (month <= MAX_MONTHS_OF_YEAR)
+        && (year >= MIN_YEAR) && (year <= MAX_YEAR))
+            isValidDate = (day >= MIN_DAYS_OF_MONTH) && (day <= maxDaysOfMonth(month, year)) 
             && (month >= MIN_MONTHS_OF_YEAR) && (month <= MAX_MONTHS_OF_YEAR)
             && (year >= MIN_YEAR) && (year <= MAX_YEAR);
 
@@ -118,7 +120,7 @@ public class Date
     public void setMonth(int monthToSet){
         boolean isValidMonth = (monthToSet >= MIN_MONTHS_OF_YEAR) && (monthToSet <= MAX_MONTHS_OF_YEAR);
         // Only set month if the objects' day is valid in new month, and month is valid
-        if(isValidDayOfMonth(this._day, monthToSet, this._year) && isValidMonth == true){
+        if(isValidMonth == true && isValidDayOfMonth(this._day, monthToSet, this._year) ){
             this._month = monthToSet;
         }
     }
@@ -211,7 +213,7 @@ public class Date
         // next day is a valid day
         if(isValidDayOfMonth(getDay() + 1, getMonth(), getYear())){
             return new Date(getDay() + 1, getMonth(), getYear());      
-            
+
         }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR && getYear() + 1 > MAX_YEAR){ // not valid day, not valid month, not valid year
             // next day is 1st of next month, next month is first of next year, next year is 10,000 -> constructor returns 1/1/2000
             return new Date(MIN_DAYS_OF_MONTH, MIN_MONTHS_OF_YEAR, getYear() + 1);
@@ -219,7 +221,7 @@ public class Date
         }else if(getMonth() + 1 > MAX_MONTHS_OF_YEAR){ // not valid day, not valid month but valid year
             // next day is 1st of next month, next month is first of next year -> return 1.1 of next year
             return new Date(MIN_DAYS_OF_MONTH, MIN_MONTHS_OF_YEAR, getYear() + 1);
-            
+
         }else{ // not valid day but valid month and year
             // next day is 1st of next month -> return 1st of next month
             return new Date(MIN_DAYS_OF_MONTH, getMonth() + 1, getYear());
@@ -238,16 +240,29 @@ public class Date
         //january = 13, february = 14 trated as months of last year
         // Y = last 2 digit of the year
         // C = first 2 digits of the year
-        int month = getMonth();
-        int year = getYear() % 100;
-        int century = Math.floorDiv(getYear(), 100);
 
+        /*
+         * 7/1/1989
+         * 
+         * 
+         */
+        int day = getDay();
+        int month = getMonth();
+        int year = getYear();
+        int century;
         if(getMonth() < 3){
+            //Date d = new Date(getDay(), getMonth(), getYear()-1);
             // month is jan/feb
+            //day = d.getDay();
             month = getMonth() + 12;
+            year--;
+            //year = d.getYear();
         }
-        int day = (getDay() + (26 * (month + 1)) / 10 + year + year / 4 + century / 4 - 2 * century) % 7;
-        return day;
+        century = year / 100;
+        year = year % 100;
+        
+
+        return Math.floorMod((getDay() + (26 * (month + 1)) / 10 + year + year / 4 + century / 4 - 2 * century) , 7);
     }
 
     //////// Private methods
