@@ -1,9 +1,17 @@
+
+
+
+
+
+
 /**
  * This class represents the current stock in the supermarket.
  *
  * @author David Rashba
  * @version 2020a
  */
+
+// Bugs - NullPointerException when adding an FoodItem, deleting it, and adding the same object again and then trying to insert at index
 public class Stock
 {
     // an array of all the supermarket food items
@@ -29,7 +37,7 @@ public class Stock
      * 
      * @return number of items in the _stock array
      */
-    public int getNoOfItems(){
+    public int getNumOfItems(){
         return _noOfItems;
     }
 
@@ -39,83 +47,69 @@ public class Stock
      * @param item the FoodItem object to add to stock
      * @return true if item added succesfully
      */
+
     public boolean addItem(FoodItem newItem){
-        /*
-         * 1. define indices to relevant cases -
-         *    a. when there is a null object in array
-         *    b. when there is an object with same fields but different dates in the array (comparing to item parameter)
-         *    c. when there is an object which is exactly the same as the item in parameter
-         *
-         * 2. loop over the _stock array, and check -
-         *    if all indices are >= 0 -> found all first occurences, no need to check more, break the loop
-         *    a. is this the first null item in array? -> assign index to firstNullArray
-         *    b. is this the first item where only the dates are different then item? -> assign index to sameNameDiffDateIndex
-         *    c. is this the first item which is the same as given item? -> assign index to sameItemIndex
-         * 
-         * ******** if all indices are -1, cant add new item -> return false
-         * 
-         * 3. add item by following level of importance -
-         *    a. the item is already in array -> just add quantity - increament _noOfItems, return true
-         *    b. the item is in the array, but with different dates, and there are null places after the index - return insert method (if inserted, increaments _noOfItems and returns true, else returns false)
-         *    c. the item is not in the array at all -> insert item in first null index - increament _noOfItems, return true
-         *    d. if still could not add item, return false
-         */
-
-        // the index of first null object in the array
-        int firstNullIndex = -1;
-
-        // the index of first object with different dates in the array
-        int sameNameDiffDateIndex = -1;
-
-        // the index of the object in the array which is the same as item
-        int sameItemIndex = -1;
-
-        /*
-         ** To prevent possibilty where there is a hole in array, 
-         ** and we've assigned an item in null place, but it is already existing in the list after that null place, 
-         ** we first check all available possibilities, and only then assign the item.
-         */
-        for(int i = 0; i < _stock.length; i++){
-            // if all indices are >= 0 -> found all first occurences, no need to check more, break the loop
-            if(firstNullIndex >= 0 && sameNameDiffDateIndex >= 0 && sameItemIndex >= 0)
-                break;
-
-            // if didnt find first null index yet, and current item in array is null -> assign index to first null index
-            if(firstNullIndex < 0 && _stock[i] == null){
-                firstNullIndex = i;
-
-                // if didnt find item with same name but different dates, and current item in index has same name with different dates -> assign index to same name diff date
-            }else if(sameNameDiffDateIndex < 0 && isSameFoodItemDiffDate(_stock[i], newItem)){
-                sameNameDiffDateIndex = i;
-
-                // if didnt find same item, and current item in index is same item -> assign index to same item
-            }else if(sameItemIndex < 0 && isSameFoodItemAndDate(_stock[i], newItem)){
-                sameItemIndex = i;
-            }
-        }
-
-        //  if all indices are -1, cant add new item -> return false
-        if(firstNullIndex < 0 && sameNameDiffDateIndex < 0 && sameItemIndex < 0)
-            return false;
-
-        if(sameItemIndex >= 0){
-            // item already exists -> add quntity and return true
-            int q = _stock[sameItemIndex].getQuantity() + newItem.getQuantity();
-            _stock[sameItemIndex].setQuantity(q);
-            return true;
-        }else if(sameNameDiffDateIndex >= 0 && firstNullIndex >= 0){
-            // item exists but with different dates, return insert item (method returns true and increaments _noOfItems if successful, else returns false)
-            return insertItem(newItem, sameNameDiffDateIndex);
-        }else if(firstNullIndex >= 0){
-            // there is no such item in array, and theres is a free place in array, assign item to that place, increament _noOfItems and return true
-            _stock[firstNullIndex] = new FoodItem(newItem);
+        // if _noOfItems = 0, just add newItem to first place in array
+        if(_noOfItems == 0){
+            _stock[0] = new FoodItem(newItem);
+            // increament _noOfItems
             _noOfItems++;
+            // item added, return true
             return true;
         }else{
-            // unable to add item, return false
-            return false;
-        }
+            // if there are already items in the list
+            
+            // new item cat. number for convenience
+            long newItemCatNumber = newItem.getCatalogueNumber();
+            // save first null place index, -1 if didnt find
+            int firstNullPlace = -1;
+            for(int i = 0; i < _stock.length; i++){
+                // check for null place
+                if(_stock[i] == null && firstNullPlace == -1){
+                    // found first null place, save index for later
+                    firstNullPlace = i;
+                }else if(_stock[i] != null){
+                    // all the operations for existing item in array
 
+                    if(isSameFoodItemAndDate(_stock[i], newItem)){  // 1. new item is exactly the same as item
+                        // just add quantity and return true
+                        _stock[i].setQuantity(_stock[i].getQuantity() + newItem.getQuantity());
+                        return true;
+                    }else if(isSameFoodItemDiffDate(_stock[i], newItem)){    // 2. new item is the same as item but different dates
+                        // insert newItem before item
+                        // insert method returns true and increaments _noOfItems if successfull
+                        // else returns false (cant insert an item)
+                        return insertItem(newItem, i);
+                    }else if(_stock[i].getCatalogueNumber() > newItemCatNumber){    // 3. found an item with bigger cat. number
+                        // insert newItem before item
+                        // insert method returns true and increaments _noOfItems if successfull
+                        // else returns false (cant insert an item)
+                        return insertItem(newItem, i);
+                    }
+
+                }
+
+            }
+            // if got here -> there are no similar items in array, and no item with bigger cat number
+            if(firstNullPlace > -1){
+                // removeItemAtIndex with null reduction flag will make sure that if there are non-null items after firstNullPlace -> we get rid of them
+                removeItemAtIndex(firstNullPlace, true);
+                for(int i = firstNullPlace; i < _stock.length; i++){
+                    // find the first null place
+                    if(_stock[i] == null){
+                        // assign newItem to null place, increament _noOfItems and return true
+                        _stock[i] = new FoodItem(newItem);
+                        _noOfItems++;
+                        return true;
+                    }
+                }
+            }else{
+                // cant insert newItem -> return false
+                return false;
+            }
+        }
+        // only way to get here is through a worm hole in space-time
+        return false;
     }
 
     /**
@@ -191,7 +185,8 @@ public class Stock
     public void removeAfterDate(Date date){
         for(int i = 0; i < _stock.length; i++){
             if(_stock[i] != null && _stock[i].getExpiryDate().after(date)){
-                removeItemAtIndex(i);
+                // remove item at index i, false means removing an item and not reducing null
+                removeItemAtIndex(i, false);
             }
         }
     }
@@ -251,7 +246,7 @@ public class Stock
             // if item is not null
             if(_stock[i] != null){
                 // add item.toString to list
-                list.concat(_stock[i].toString() + "\n");
+                list = list.concat(_stock[i].toString() + "\n");
             }
         }
 
@@ -276,7 +271,7 @@ public class Stock
                     // if quantity is 0
                     if(_stock[i].getQuantity() == 0){
                         // remove item
-                        removeItemAtIndex(i);
+                        removeItemAtIndex(i,false);
                     }
                     // after operation move to next item in itemsList
                     break;
@@ -325,6 +320,11 @@ public class Stock
      * @return true if same name, catalougeNumber, expiryDate and productionDate
      */
     private boolean isSameFoodItemAndDate(FoodItem stockItem, FoodItem otherItem){
+        // if one of them is not an item, return false
+        if(stockItem == null || otherItem == null)
+            return false;
+
+        // check equallity - name, cat numer, expiry date AND production date
         boolean isSame = stockItem.getName().equals(otherItem.getName())
             && stockItem.getCatalogueNumber() == otherItem.getCatalogueNumber()
             && stockItem.getExpiryDate().equals(otherItem.getExpiryDate())
@@ -343,6 +343,11 @@ public class Stock
      * @return true if same name, catalougeNumber, and different expiryDate or productionDate
      */
     private boolean isSameFoodItemDiffDate(FoodItem stockItem, FoodItem otherItem){
+        // if one of them is not an item, return false
+        if(stockItem == null || otherItem == null)
+            return false;
+
+        // check equallity - name, cat numer, expiry date OR production date
         boolean isSame = stockItem.getName().equals(otherItem.getName())
             && stockItem.getCatalogueNumber() == otherItem.getCatalogueNumber()
             && (!stockItem.getExpiryDate().equals(otherItem.getExpiryDate())
@@ -352,6 +357,7 @@ public class Stock
 
     /**
      * inserting given food item in given index
+     * increamenting _noOfItems if succesfull
      * modifies _stock
      * 
      * @param item food item to insert
@@ -360,23 +366,16 @@ public class Stock
      * @return true if managed to insert item
      */
     private boolean insertItem(FoodItem item, int index){
-        // check that there is enough space in array -> there are null places
-        int count = 0;
-        for(int i = index; i < _stock.length; i++){
-            if (_stock[i] == null)
-                count++;
-        }
-        // if there are null places in _stock
-        if(count > 0){
-            FoodItem temp = new FoodItem(null);
+        // check _noOfItems is less than maximum -> there are null places
+        if(_noOfItems < MAX_ITEMS_IN_ARRAY){
+            FoodItem temp =null;
             for(int i = index; i < _stock.length -1; i++){
                 // loop over _stock from [index]
-
                 if(i == index){
                     // keep the item in the index 
                     temp = new FoodItem(_stock[i]);
                     // replace item with new item
-                    _stock[i] = item;
+                    _stock[i] = new FoodItem(item);
                 }else{
                     // save old item
                     FoodItem a = new FoodItem(_stock[i]);
@@ -390,26 +389,56 @@ public class Stock
             // inserted a new item to list, add 1 to _noOfItems
             _noOfItems++;
             return true; // after inserting
-        }else return false; // no place to insert item
+        }else {
+            // no place to insert item
+            return false; 
+        }
     }
 
     /**
-     * gets rid of holes in array after deletion of item
+     * gets rid of holes or items in array
      * modifies _stock
      * 
+     * @param nullReduction true if removing null, false if removing item
      * @param index index of deleted item
      */
-    private void removeItemAtIndex(int index){
+    private void removeItemAtIndex(int index, boolean nullReduction){
         // if index is not the last item in the array
         if(index < _stock.length - 1){
             // loop from index to the item before the last in the array
             for(int i = index; i < _stock.length - 1; i++){
-                // assign next item to the current item
-                _stock[i] = new FoodItem(_stock[i+1]);
+                // if next item isnt null, assign to the current item
+                if(_stock[i+1] != null){
+                    // move item to the index
+                    _stock[i] = new FoodItem(_stock[i+1]);
+                    //remove the item from original position
+                    _stock[i+1] = null;
+                }else{
+                    //loop untill you find a non-null item, or untill end of array
+                    int next = 1;
+                    while(_stock[i+next] == null && i+next < _stock.length-1){
+                        next++;
+                    }
+                    // here either we have a non-null FoodItem, or we are at the end of the array
+                    if(_stock[i+next] != null){
+                        // if its a non-null item just move it to the index of null place
+                        _stock[i] = new FoodItem(_stock[i+next]);
+                        //remove the item from original position
+                        _stock[i+next] = null;
+                    }else{
+                        // we got to end of array and all items are null, just break the loop
+                        break;
+                    }
+                }
             }
         }else{
             // index of last item in the array - make null
             _stock[index] = null;
         }
+        if(!nullReduction){
+            // we removed an item, decrement _noOfItems
+            _noOfItems--;
+        }
     }
+
 }
