@@ -1,5 +1,4 @@
-// Add test cases as you want
-public class Tester
+public class StudentsTester
 {
     public static void main(String[] args)
     {
@@ -88,8 +87,13 @@ public class Tester
         System.out.println("\nhowMany(0) should return 0:\t" + st.howMany(0));
 
         System.out.println("howMany(1) should return 18:\t" + st.howMany(1));
+        if(MAX_INT) {
+        System.out.println("howMany(5) should return 145:\t" + st.howMany(5));
+        System.out.println("howMany(11) should return 325:\t" + st.howMany(11));
+        } else{
         System.out.println("howMany(5) should return 150:\t" + st.howMany(5));
         System.out.println("howMany(11) should return 330:\t" + st.howMany(11));
+        }
         System.out.println("howMany(24) should return 0:\t" + st.howMany(24));
 
         System.out.println("\nhowManyPieces() should return 330:\t" + st.howManyPieces());
@@ -103,27 +107,27 @@ public class Tester
 
         System.out.println("\nStock toString() should print:");
         System.out.println(
-                "\n\tFoodItem: Milk3\tCatalogueNumber: 1010\tProductionDate: 18/06/2002\tExpiryDate: 01/09/2003\tQuantity: 12\n" +
-                "\tFoodItem: Hone4\tCatalogueNumber: 1112\tProductionDate: 11/06/2002\tExpiryDate: 28/06/2002\tQuantity: 1\n" +
-                "\tFoodItem: PopC5\tCatalogueNumber: 1415\tProductionDate: 09/06/2002\tExpiryDate: 18/06/2002\tQuantity: 9\n" +
-                "\tFoodItem: PopC2\tCatalogueNumber: 1456\tProductionDate: 01/09/2003\tExpiryDate: 20/09/2003\tQuantity: 25\n" +
-                "\tFoodItem: PopC2\tCatalogueNumber: 1456\tProductionDate: 28/06/2002\tExpiryDate: 01/09/2003\tQuantity: 5\n" +
-                "\tFoodItem: Milk\tCatalogueNumber: 1547\tProductionDate: 12/01/2000\tExpiryDate: 13/02/2000\tQuantity: 12\n" +
-                "\tFoodItem: Milk29\tCatalogueNumber: 2345\tProductionDate: 30/01/2002\tExpiryDate: 25/05/2002\tQuantity: 41\n" +
-                "\tFoodItem: Milk16\tCatalogueNumber: 2352\tProductionDate: 31/05/2002\tExpiryDate: 11/06/2002\tQuantity: 14\n" +
-                "\tFoodItem: PopC29\tCatalogueNumber: 2365\tProductionDate: 15/04/2002\tExpiryDate: 16/04/2002\tQuantity: 10\n" +
-                "\tFoodItem: PopC\tCatalogueNumber: 3586\tProductionDate: 17/03/2001\tExpiryDate: 22/03/2001\tQuantity: 9\n" +
-                "\tFoodItem: Milk2\tCatalogueNumber: 3658\tProductionDate: 31/05/2002\tExpiryDate: 09/06/2002\tQuantity: 41\n" +
-                "\tFoodItem: Milk1\tCatalogueNumber: 4214\tProductionDate: 08/04/2002\tExpiryDate: 15/04/2002\tQuantity: 14\n" +
-                "\tFoodItem: Hone1\tCatalogueNumber: 6859\tProductionDate: 20/04/2002\tExpiryDate: 21/04/2002\tQuantity: 22\n" +
-                "\tFoodItem: Hone2\tCatalogueNumber: 7459\tProductionDate: 11/06/2002\tExpiryDate: 18/06/2002\tQuantity: 0\n" +
-                "\tFoodItem: PopC1\tCatalogueNumber: 7652\tProductionDate: 01/05/2002\tExpiryDate: 02/05/2002\tQuantity: 36\n" +
-                "\tFoodItem: PopC29\tCatalogueNumber: 8542\tProductionDate: 22/03/2001\tExpiryDate: 15/04/2002\tQuantity: 15\n" +
-                "\tFoodItem: Hone17\tCatalogueNumber: 8546\tProductionDate: 25/05/2002\tExpiryDate: 09/06/2002\tQuantity: 22\n" +
-                "\tFoodItem: Hone\tCatalogueNumber: 8561\tProductionDate: 15/02/2000\tExpiryDate: 13/03/2001\tQuantity: 1\n" +
-                "\tFoodItem: Hone29\tCatalogueNumber: 8569\tProductionDate: 20/04/2002\tExpiryDate: 01/05/2002\tQuantity: 0\n" +
-                "\tFoodItem: PopC18\tCatalogueNumber: 8795\tProductionDate: 01/05/2002\tExpiryDate: 31/05/2002\tQuantity: 36\n" +
-                "\tFoodItem: PopC29\tCatalogueNumber: 9741\tProductionDate: 15/04/2002\tExpiryDate: 16/04/2002\tQuantity: 5");
+            "\n\tFoodItem: Milk3\tCatalogueNumber: 1010\tProductionDate: 18/06/2002\tExpiryDate: 01/09/2003\tQuantity: 12\n" +
+            "\tFoodItem: Hone4\tCatalogueNumber: 1112\tProductionDate: 11/06/2002\tExpiryDate: 28/06/2002\tQuantity: 1\n" +
+            "\tFoodItem: PopC5\tCatalogueNumber: 1415\tProductionDate: 09/06/2002\tExpiryDate: 18/06/2002\tQuantity: 9\n" +
+            "\tFoodItem: PopC2\tCatalogueNumber: 1456\tProductionDate: 01/09/2003\tExpiryDate: 20/09/2003\tQuantity: 25\n" +
+            "\tFoodItem: PopC2\tCatalogueNumber: 1456\tProductionDate: 28/06/2002\tExpiryDate: 01/09/2003\tQuantity: 5\n" +
+            "\tFoodItem: Milk\tCatalogueNumber: 1547\tProductionDate: 12/01/2000\tExpiryDate: 13/02/2000\tQuantity: 12\n" +
+            "\tFoodItem: Milk29\tCatalogueNumber: 2345\tProductionDate: 30/01/2002\tExpiryDate: 25/05/2002\tQuantity: 41\n" +
+            "\tFoodItem: Milk16\tCatalogueNumber: 2352\tProductionDate: 31/05/2002\tExpiryDate: 11/06/2002\tQuantity: 14\n" +
+            "\tFoodItem: PopC29\tCatalogueNumber: 2365\tProductionDate: 15/04/2002\tExpiryDate: 16/04/2002\tQuantity: 10\n" +
+            "\tFoodItem: PopC\tCatalogueNumber: 3586\tProductionDate: 17/03/2001\tExpiryDate: 22/03/2001\tQuantity: 9\n" +
+            "\tFoodItem: Milk2\tCatalogueNumber: 3658\tProductionDate: 31/05/2002\tExpiryDate: 09/06/2002\tQuantity: 41\n" +
+            "\tFoodItem: Milk1\tCatalogueNumber: 4214\tProductionDate: 08/04/2002\tExpiryDate: 15/04/2002\tQuantity: 14\n" +
+            "\tFoodItem: Hone1\tCatalogueNumber: 6859\tProductionDate: 20/04/2002\tExpiryDate: 21/04/2002\tQuantity: 22\n" +
+            "\tFoodItem: Hone2\tCatalogueNumber: 7459\tProductionDate: 11/06/2002\tExpiryDate: 18/06/2002\tQuantity: 0\n" +
+            "\tFoodItem: PopC1\tCatalogueNumber: 7652\tProductionDate: 01/05/2002\tExpiryDate: 02/05/2002\tQuantity: 36\n" +
+            "\tFoodItem: PopC29\tCatalogueNumber: 8542\tProductionDate: 22/03/2001\tExpiryDate: 15/04/2002\tQuantity: 15\n" +
+            "\tFoodItem: Hone17\tCatalogueNumber: 8546\tProductionDate: 25/05/2002\tExpiryDate: 09/06/2002\tQuantity: 22\n" +
+            "\tFoodItem: Hone\tCatalogueNumber: 8561\tProductionDate: 15/02/2000\tExpiryDate: 13/03/2001\tQuantity: 1\n" +
+            "\tFoodItem: Hone29\tCatalogueNumber: 8569\tProductionDate: 20/04/2002\tExpiryDate: 01/05/2002\tQuantity: 0\n" +
+            "\tFoodItem: PopC18\tCatalogueNumber: 8795\tProductionDate: 01/05/2002\tExpiryDate: 31/05/2002\tQuantity: 36\n" +
+            "\tFoodItem: PopC29\tCatalogueNumber: 9741\tProductionDate: 15/04/2002\tExpiryDate: 16/04/2002\tQuantity: 5");
 
         System.out.println("\nStock toString() prints:");
         System.out.println(st);
@@ -156,7 +160,6 @@ public class Tester
         st.addItem(f3);
         System.out.println("getNumOfItems() should return 21:\t" + st.getNumOfItems());
 
-
         System.out.println("Performing updateStock on item Hone4");
         System.out.println("Hone4 has 1 in quantity and we updateStock 4 times so it should be deleted");
         String[] list = {"Hone4","Hone4","Hone4","Hone4","Hone4","Hone4"};
@@ -173,7 +176,6 @@ public class Tester
         System.out.println("updateStock() should change to 25 quantity of item with catNumber 1456\t");
         System.out.println("First place PopC2 appear should be with quantity 20 \t");
         System.out.println("\nCheck list: \n" + st);
-
 
     }
 }
