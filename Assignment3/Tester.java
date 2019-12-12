@@ -93,7 +93,7 @@ public class Tester
 
         System.out.println("\nhowManyPieces() should return 330:\t" + st.howManyPieces());
 
-        System.out.println("\nmostExpensive() should return catNumber 8542:\t" + st.mostExpensive().getCatalogueNumber());
+        System.out.println("\nmostExpensive() should return item with catNumber 8542:\t" + st.mostExpensive().getCatalogueNumber() + " <- printing here with mostExpensive().getCatalogueNumber().");
 
         System.out.println("\norder(0) should return empty string:\t" + st.order(0));
         System.out.println("order(1) should return exactly [Hone2, Hone29]:\t" + st.order(1));
