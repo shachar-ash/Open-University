@@ -1,4 +1,3 @@
-{
  /**
  * CongruentTriangles.java
  * 
